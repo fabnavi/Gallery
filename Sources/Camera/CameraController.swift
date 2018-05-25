@@ -132,6 +132,7 @@ class CameraController: UIViewController {
   }
 
   @objc func doneButtonTouched(_ button: UIButton) {
+    button.isEnabled = false
     EventHub.shared.doneWithImages?()
   }
     
