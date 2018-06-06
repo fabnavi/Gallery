@@ -7,6 +7,8 @@ class VideosController: UIViewController {
   lazy var gridView: GridView = self.makeGridView()
   lazy var videoBox: VideoBox = self.makeVideoBox()
   lazy var infoLabel: UILabel = self.makeInfoLabel()
+  
+  lazy var indicatorView: IndicaterView = self.createIndicatorView()
 
   var items: [Video] = []
   let library = VideosLibrary()
@@ -38,7 +40,7 @@ class VideosController: UIViewController {
     view.backgroundColor = UIColor.white
 
     view.addSubview(gridView)
-
+    view.addSubview(indicatorView)
     [videoBox, infoLabel].forEach {
       gridView.bottomView.addSubview($0)
     }
@@ -62,6 +64,8 @@ class VideosController: UIViewController {
 
     gridView.arrowButton.updateText("Gallery.AllVideos".g_localize(fallback: "ALL VIDEOS"))
     gridView.arrowButton.arrow.isHidden = true
+    gridView.addSubview(indicatorView)
+    gridView.indicatorView.isHidden = true
   }
 
   // MARK: - Action
@@ -71,27 +75,7 @@ class VideosController: UIViewController {
   }
 
   @objc func doneButtonTouched(_ button: UIButton) {
-    let indicatorView = UIView.init(frame: CGRect.init(x: (self.view.bounds.width - 200) / 2, y: (self.view.bounds.height - 200) / 2, width: 200, height: 200))
-    indicatorView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
-    
-    let indicator = UIActivityIndicatorView()
-    indicator.activityIndicatorViewStyle = .whiteLarge
-    indicator.center = CGPoint(x: indicatorView.bounds.width / 2, y: indicatorView.bounds.height / 2 )
-    indicator.color = UIColor.white
-    indicator.hidesWhenStopped = true
-    indicatorView.addSubview(indicator)
-    indicatorView.bringSubview(toFront: indicator)
-    indicator.startAnimating()
-    
-    let waitLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: indicatorView.bounds.width, height: indicatorView.bounds.height))
-    waitLabel.numberOfLines = 2
-    waitLabel.text = "動画をアップロードしています．アプリを落とさないでください"
-    waitLabel.font = UIFont.systemFont(ofSize: 14)
-    waitLabel.textColor = UIColor.white
-    waitLabel.layer.position = CGPoint(x: waitLabel.bounds.width / 2, y: indicatorView.bounds.height - 30)
-    waitLabel.textAlignment = NSTextAlignment.center
-    indicatorView.addSubview(waitLabel)
-    
+    gridView.indicatorView.isHidden = false
     button.isEnabled = false
     EventHub.shared.doneWithVideos?()
   }
@@ -138,6 +122,29 @@ class VideosController: UIViewController {
                         (Int(Config.VideoEditor.maximumDuration)))
 
     return label
+  }
+
+  func createIndicatorView() {
+    let indicatorView = UIView.init(frame: CGRect.init(x: (self.view.bounds.width - 200) / 2, y: (self.view.bounds.height - 200) / 2, width: 200, height: 200))
+    indicatorView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+    
+    let indicator = UIActivityIndicatorView()
+    indicator.activityIndicatorViewStyle = .whiteLarge
+    indicator.center = CGPoint(x: indicatorView.bounds.width / 2, y: indicatorView.bounds.height / 2 )
+    indicator.color = UIColor.white
+    indicator.hidesWhenStopped = true
+    indicatorView.addSubview(indicator)
+    indicatorView.bringSubview(toFront: indicator)
+    indicator.startAnimating()
+    
+    let waitLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: indicatorView.bounds.width, height: indicatorView.bounds.height))
+    waitLabel.numberOfLines = 2
+    waitLabel.text = "動画をアップロードしています．アプリを落とさないでください"
+    waitLabel.font = UIFont.systemFont(ofSize: 14)
+    waitLabel.textColor = UIColor.white
+    waitLabel.layer.position = CGPoint(x: waitLabel.bounds.width / 2, y: indicatorView.bounds.height - 30)
+    waitLabel.textAlignment = NSTextAlignment.center
+    indicatorView.addSubview(waitLabel)
   }
 }
 
