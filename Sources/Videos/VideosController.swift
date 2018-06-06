@@ -38,7 +38,6 @@ class VideosController: UIViewController {
     view.backgroundColor = UIColor.white
 
     view.addSubview(gridView)
-    view.addSubview(indicatorView)
     [videoBox, infoLabel].forEach {
       gridView.bottomView.addSubview($0)
     }
