@@ -7,8 +7,6 @@ class VideosController: UIViewController {
   lazy var gridView: GridView = self.makeGridView()
   lazy var videoBox: VideoBox = self.makeVideoBox()
   lazy var infoLabel: UILabel = self.makeInfoLabel()
-  
-  lazy var indicatorView: IndicaterView = self.createIndicatorView()
 
   var items: [Video] = []
   let library = VideosLibrary()
@@ -64,8 +62,6 @@ class VideosController: UIViewController {
 
     gridView.arrowButton.updateText("Gallery.AllVideos".g_localize(fallback: "ALL VIDEOS"))
     gridView.arrowButton.arrow.isHidden = true
-    gridView.addSubview(indicatorView)
-    gridView.indicatorView.isHidden = true
   }
 
   // MARK: - Action
@@ -75,7 +71,7 @@ class VideosController: UIViewController {
   }
 
   @objc func doneButtonTouched(_ button: UIButton) {
-    gridView.indicatorView.isHidden = false
+    createIndicatorView()
     button.isEnabled = false
     EventHub.shared.doneWithVideos?()
   }
@@ -145,6 +141,19 @@ class VideosController: UIViewController {
     waitLabel.layer.position = CGPoint(x: waitLabel.bounds.width / 2, y: indicatorView.bounds.height - 30)
     waitLabel.textAlignment = NSTextAlignment.center
     indicatorView.addSubview(waitLabel)
+    
+    gridView.addSubview(indicatorView)
+    
+    let testLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: indicatorView.bounds.width, height: indicatorView.bounds.height))
+    testLabel.numberOfLines = 2
+    testLabel.text = "動画をアップロードしています．アプリを落とさないでください"
+    testLabel.font = UIFont.systemFont(ofSize: 14)
+    testLabel.textColor = UIColor.white
+    testLabel.layer.position = CGPoint(x: waitLabel.bounds.width / 2, y: indicatorView.bounds.height - 30)
+    testLabel.textAlignment = NSTextAlignment.center
+    
+    gridView.addSubview(testLabel)
+    
   }
 }
 
