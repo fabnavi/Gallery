@@ -142,17 +142,6 @@ class VideosController: UIViewController {
     indicatorView.addSubview(waitLabel)
     
     gridView.addSubview(indicatorView)
-    
-    let testLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: indicatorView.bounds.width, height: indicatorView.bounds.height))
-    testLabel.numberOfLines = 2
-    testLabel.text = "動画をアップロードしています．アプリを落とさないでください"
-    testLabel.font = UIFont.systemFont(ofSize: 14)
-    testLabel.textColor = UIColor.white
-    testLabel.layer.position = CGPoint(x: waitLabel.bounds.width / 2, y: indicatorView.bounds.height - 30)
-    testLabel.textAlignment = NSTextAlignment.center
-    
-    gridView.addSubview(testLabel)
-    
   }
 }
 
