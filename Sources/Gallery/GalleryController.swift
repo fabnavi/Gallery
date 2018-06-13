@@ -109,24 +109,28 @@ public class GalleryController: UIViewController, PermissionControllerDelegate {
 
   func setup() {
     EventHub.shared.close = { [weak self] in
+        print("close")
       if let strongSelf = self {
         strongSelf.delegate?.galleryControllerDidCancel(strongSelf)
       }
     }
 
     EventHub.shared.doneWithImages = { [weak self] in
+        print("doneImage")
       if let strongSelf = self {
         strongSelf.delegate?.galleryController(strongSelf, didSelectImages: strongSelf.cart.images)
       }
     }
 
     EventHub.shared.doneWithVideos = { [weak self] in
+        print("doneVideo")
       if let strongSelf = self, let video = strongSelf.cart.video {
         strongSelf.delegate?.galleryController(strongSelf, didSelectVideo: video)
       }
     }
 
     EventHub.shared.stackViewTouched = { [weak self] in
+        print("touchLightbox")
       if let strongSelf = self {
         strongSelf.delegate?.galleryController(strongSelf, requestLightbox: strongSelf.cart.images)
       }
