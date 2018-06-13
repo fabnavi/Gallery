@@ -70,7 +70,7 @@ class VideosController: UIViewController {
   }
 
   @objc func doneButtonTouched(_ button: UIButton) {
-    createIndicatorView()
+//    createIndicatorView()
     button.isEnabled = false
     EventHub.shared.doneWithVideos?()
   }
