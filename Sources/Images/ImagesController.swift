@@ -77,6 +77,7 @@ class ImagesController: UIViewController {
   }
 
   @objc func doneButtonTouched(_ button: UIButton) {
+    createIndicatorView()
     button.isEnabled = false
     EventHub.shared.doneWithImages?()
   }
@@ -135,6 +136,31 @@ class ImagesController: UIViewController {
     let view = StackView()
 
     return view
+  }
+    
+  func createIndicatorView() {
+    let indicatorView = UIView.init(frame: CGRect.init(x: (self.view.bounds.width - 200) / 2, y: (self.view.bounds.height - 200) / 2, width: 200, height: 200))
+    indicatorView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+    
+    let indicator = UIActivityIndicatorView()
+    indicator.activityIndicatorViewStyle = .whiteLarge
+    indicator.center = CGPoint(x: indicatorView.bounds.width / 2, y: indicatorView.bounds.height / 2 )
+    indicator.color = UIColor.white
+    indicator.hidesWhenStopped = true
+    indicatorView.addSubview(indicator)
+    indicatorView.bringSubview(toFront: indicator)
+    indicator.startAnimating()
+    
+    let waitLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: indicatorView.bounds.width, height: indicatorView.bounds.height))
+    waitLabel.numberOfLines = 2
+    waitLabel.text = "写真をアップロードしています．アプリを落とさないでください"
+    waitLabel.font = UIFont.systemFont(ofSize: 14)
+    waitLabel.textColor = UIColor.white
+    waitLabel.layer.position = CGPoint(x: waitLabel.bounds.width / 2, y: indicatorView.bounds.height - 30)
+    waitLabel.textAlignment = NSTextAlignment.center
+    indicatorView.addSubview(waitLabel)
+    
+    gridView.addSubview(indicatorView)
   }
 }
 
