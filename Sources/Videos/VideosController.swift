@@ -124,7 +124,7 @@ class VideosController: UIViewController {
     indicatorView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
     
     let indicator = UIActivityIndicatorView()
-    indicator.activityIndicatorViewStyle = .whiteLarge
+    indicator.style = .whiteLarge
     indicator.center = CGPoint(x: indicatorView.bounds.width / 2, y: indicatorView.bounds.height / 2 )
     indicator.color = UIColor.white
     indicator.hidesWhenStopped = true
