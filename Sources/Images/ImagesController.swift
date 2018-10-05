@@ -143,12 +143,12 @@ class ImagesController: UIViewController {
     indicatorView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
     
     let indicator = UIActivityIndicatorView()
-    indicator.activityIndicatorViewStyle = .whiteLarge
+    indicator.style = .whiteLarge
     indicator.center = CGPoint(x: indicatorView.bounds.width / 2, y: indicatorView.bounds.height / 2 )
     indicator.color = UIColor.white
     indicator.hidesWhenStopped = true
     indicatorView.addSubview(indicator)
-    indicatorView.bringSubview(toFront: indicator)
+    indicatorView.bringSubviewToFront(indicator)
     indicator.startAnimating()
     
     let waitLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: indicatorView.bounds.width, height: indicatorView.bounds.height))

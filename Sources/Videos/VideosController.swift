@@ -129,7 +129,7 @@ class VideosController: UIViewController {
     indicator.color = UIColor.white
     indicator.hidesWhenStopped = true
     indicatorView.addSubview(indicator)
-    indicatorView.bringSubview(toFront: indicator)
+    indicatorView.bringSubviewToFront(indicator)
     indicator.startAnimating()
     
     let waitLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: indicatorView.bounds.width, height: indicatorView.bounds.height))
